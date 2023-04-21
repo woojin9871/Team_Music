@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>세대별</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+</head>
+<style>
+  .btn:active, .btn:focus {
+  outline:none !important;
+  box-shadow:none !important;
+  }
+</style>
+<body>
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed_top">
+  <div class="container-fluid">
+   <a class="navbar-brand" href="/" style="font-size:45px;">Music</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+  </button>
+   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size:25px; padding:30px;">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/">Home</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/genre/genre">Genre</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/artist/artist">Artist</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/generation/generation">Generation</a>
+     </li>
+    </ul>
+   </div>
+  </div>
+  
+ <th:block sec:authorize="isAuthenticated()">
+	<span sec:authentication="principal.username" class="text-white"></span>
+	<button type="button" onclick="location.href='/myPage/myPage'" class="btn btn-primary" style="width:160px">마이페이지</button>
+ </th:block>
+
+ </nav>
+ 
+ <div class="container overflow-hidden text-center" >
+  <div class="row gx-5">
+    <div class="col">
+     <div class="p-3 bg-light" style="font-size:25px">세대별 인기곡</div>
+    </div>
+  </div>
+</div>
+
+ <div class="container text-center border">
+  <div class="row">
+    <div class="col">
+      <button type="button" onclick="location.href='/generation/womanGeneration'" class="btn btn-light btn-lg">여성</button>
+    </div>
+    <div class="col">
+      <button type="button" onclick="location.href='/generation/manGeneration'" class="btn btn-light btn-lg">남성</button>
+    </div>
+  </div>
+</div>
+
+
+ <div class="container text-center border">
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-light">10대</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-light">20대</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-light">30대</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-light">40대</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-light">50대</button>
+    </div>
+
+<table class="table">
+<thead style="visibility: hidden;">
+  <tr>
+    <th>곡정보</th>
+    <th>곡이름</th>
+    <th>아티스트</th>
+    <th>앨범</th>
+    <th>듣기</th>
+  </tr>
+</thead>
+<tbody>
+  <th:block th:each="manGeneration : ${manGenerationList}">
+    <tr>
+      <td width="50" align="center">
+      	<img th:src="${manGeneration.albumImg}"/>
+      </td>
+      <td width="50" align="center" th:text="${manGeneration.songName}"></td>
+      <td width="150" align="center" th:text="${manGeneration.artist}"></td>
+      <td width="100" align="center" th:text="${manGeneration.albumName}"></td>
+      <td width="100" align="center">
+      	<a th:href="${manGeneration.youtube}" target="_blank">듣기</a>
+      </td>
+    </tr>
+  </th:block>
+</tbody>
+</table>
+  </div>
+</div>
+ 
+ <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom" style="padding:108px"></nav> -->
+</body>
+</html>

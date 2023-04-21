@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>마이페이지</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+</head>
+<style>
+ .col-md-4 {
+    width: 150px;
+    height: 150px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+ .profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+   }
+ .card {
+    position: absolute;
+    top: 35%;
+    left: 14%;
+    transform: translate( -50%, -50% );
+   }
+
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed_top">
+  <div class="container-fluid">
+   <a class="navbar-brand" href="/" style="font-size:45px;">Music</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+  </button>
+   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size:25px; padding:30px;">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/">Home</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/genre/genre">Genre</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/artist/artist">Artist</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/generation/womanGeneration">Generation</a>
+     </li>
+    </ul>
+   </div>
+  </div>
+
+  <form action="/auth/logout" method="post" class="mx-3">  
+   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <th:block sec:authorize="isAuthenticated()">	
+	 <span sec:authentication="principal.username" class="text-white"></span>
+	 <button type="submit" class="btn btn-primary" style="width:120px">로그아웃</button>
+	</th:block>	 
+  </form>	
+
+ </nav>
+
+	
+ <div class="card border-light mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="data:image/png;base64,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" class="profile rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <p class="card-text">닉네임 : <span sec:authentication="principal.username" class="text-black"></span></p>
+        <p class="card-text">이름 : <span sec:authentication="principal.username" class="text-black"></span></p>
+      </div>
+    </div>
+  </div>
+ </div>
+		
+	
+
+		
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom" style="padding:108px"></nav>
+					
+</body>
+</html>

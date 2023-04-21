@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>장르 페이지</title>
+<!-- css -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<style>
+  .image {
+    position: relative;
+  }
+  .card-body {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: white;
+    background-color: black;
+    width: 100%;
+    height: 90x;
+  }
+  
+  .card-title a {
+  	text-decoration: none;
+  	color: white;
+  	display: inline-block;
+  	width: 250px;
+  	overflow:hidden;
+  	white-space:nowrap;
+  	text-overflow: ellipsis;
+}
+
+</style>
+</head>
+<body>
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed_top">
+  <div class="container-fluid">
+   <a class="navbar-brand" href="/" style="font-size:45px;">Music</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+  </button>
+   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size:25px; padding:30px;">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/">Home</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/genre/genre">Genre</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/artist/artist">Artist</a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/generation/womanGeneration">Generation</a>
+     </li>
+    </ul>
+   </div>
+  </div>
+  
+ <th:block sec:authorize="isAuthenticated()">
+	<span sec:authentication="principal.username" class="text-white"></span>
+	<button type="button" onclick="location.href='/myPage/myPage'" class="btn btn-primary" style="width:160px">마이페이지</button>
+ </th:block>
+
+ </nav>
+
+ <div class="row">
+  <div class="col-sm-3">
+   <div class="card" style="width: 18rem;">
+    <img class="image" src="https://cdnimg.melon.co.kr/cm2/album/images/110/45/154/11045154_20220902163055_500.jpg">
+     <div class="card-body opacity-75">
+      <h5 class="card-title"><a href="https://www.youtube.com/watch?v=XBiMV9kVhwQ">비틀비틀 짝짜꿍</a></h5>
+      <p class="card-text">한로로</p>
+     </div>
+   </div>`
+  </div>
+ <div class="col-sm-3">
+ <div class="card" style="width: 18rem;">
+   <img src="https://cdnimg.melon.co.kr/cm2/album/images/104/96/194/10496194_20200925102245_500.jpg" class="card-img-top" alt="https://cdnimg.melon.co.kr/cm2/album/images/110/45/154/11045154_20220902163055_500.jpg?0979c7a6975bcd98d8a7ec61513c3a27/melon/optimize/90">
+    <div class="card-body opacity-75">
+     <h5 class="card-title"><a href="https://www.youtube.com/watch?v=I-Lwe-V41AY&pp=ygUW7IKQ672A7IKQ672AIOq5gOucu-uPjA%3D%3D">스윙스(Swings), 그냥노창, 블랙넛(Black Nut), 다민이(DAMINI)</a></h5>
+     <p class="card-text">김뜻돌</p>
+    </div>
+   </div>
+  </div>
+ <div class="col-sm-3">
+ <div class="card" style="width: 18rem;">
+   <img src="https://cdnimg.melon.co.kr/cm2/album/images/109/10/297/10910297_20220405170637_500.jpg" class="card-img-top" alt="https://cdnimg.melon.co.kr/cm2/album/images/110/45/154/11045154_20220902163055_500.jpg?0979c7a6975bcd98d8a7ec61513c3a27/melon/optimize/90">
+    <div class="card-body opacity-75">
+     <h5 class="card-title"><a href="https://www.youtube.com/watch?v=YsPwe1DXdEE&pp=ygUc66eQ66as67aA7Jik66CM7KeAIOuwleyGjOydgA%3D%3D" target="_blank">말리부오렌지</a></h5>
+     <p class="card-text">박소은</p>
+    </div>
+   </div>
+  </div>
+ <div class="col-sm-3">
+ <div class="card" style="width: 18rem;">
+   <img src="https://cdnimg.melon.co.kr/cm2/album/images/106/15/851/10615851_20210527103947_500.jpg" class="card-img-top" alt="https://cdnimg.melon.co.kr/cm2/album/images/110/45/154/11045154_20220902163055_500.jpg?0979c7a6975bcd98d8a7ec61513c3a27/melon/optimize/90">
+    <div class="card-body opacity-75">
+     <h5 class="card-title"><a href="https://www.youtube.com/watch?v=jktncyHxEpE&pp=ygUQ64W87JWM7L2cIOuqqO2KuA%3D%3D">논알콜</a></h5>
+     <p class="card-text">모트</p>
+    </div>
+   </div>
+  </div>
+ </div>
+
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom" style="padding:108px"></nav> -->
+	
+	
+</body>
+</html>
