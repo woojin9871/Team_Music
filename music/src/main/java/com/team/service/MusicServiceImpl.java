@@ -14,7 +14,7 @@ public class MusicServiceImpl implements MusicService {
 	@Autowired MusicMapper mapper;
 
 	@Override
-	public List<Music> music() throws Exception {
-		return mapper.music();
+	public List<Music> list() throws Exception {
+		return mapper.list();
 	}
 }

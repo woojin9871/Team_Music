@@ -58,9 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			.antMatchers("/auth/**").permitAll()
 			.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")	
 			.antMatchers("/admin/**").hasRole("ADMIN")
+			
+		
+			// 아이디 중복 확인
+			.antMatchers("/checkUserId").permitAll()
 			.anyRequest().authenticated()			// 요청에 대하여 인증된 사용자만 허용
 			;
-		
 		
 		// 로그인 설정
 		http.formLogin()		

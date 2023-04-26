@@ -10,9 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team.domain.MusicUsers;
+import com.team.mapper.MusicUserMapper;
 import com.team.service.MusicUserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -70,5 +73,20 @@ public class UserController {
 	public String success() {
 	
 		return "/auth/success";
+	}
+	
+	// 아이디 중복 확인
+	@Autowired
+	private MusicUserMapper userMapper;
+
+	@GetMapping("/checkUserId")
+	@ResponseBody
+	public String checkUserId(@RequestParam("userId") String userId) throws Exception {
+	    int result = userMapper.checkUserId(userId);
+	    if (result == 1) {
+	        return "fail";
+	    } else {
+	        return "success";
+	    }
 	}
 }

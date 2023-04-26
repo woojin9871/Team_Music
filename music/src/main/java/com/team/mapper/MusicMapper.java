@@ -9,5 +9,8 @@ import com.team.domain.Music;
 @Mapper
 public interface MusicMapper {
 
-	public List<Music> music() throws Exception;
+	public List<Music> list() throws Exception;
+	
+	public List<Music> selectMusicByGenre(String genre);
+
 }

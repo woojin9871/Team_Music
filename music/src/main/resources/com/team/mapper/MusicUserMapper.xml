@@ -15,4 +15,9 @@
 		INSERT INTO music_user_auth ( auth_no, user_id, auth )
 		VALUES ( SEQ_USER_AUTH.nextval, #{userId}, #{auth} )
 	</insert>
+	
+	<!-- 아이디 중복 확인 -->
+    <select id="checkUserId" resultType="int">
+        SELECT COUNT(*) FROM music_users WHERE user_id = #{userId}
+    </select>
 </mapper>

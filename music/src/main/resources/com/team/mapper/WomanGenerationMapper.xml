@@ -6,7 +6,9 @@
 
 <mapper namespace="com.team.mapper.WomanGenerationMapper">
 	<select id="list" resultType="WomanGeneration">
-		SELECT *
-		FROM Woman_Generation
+	SELECT * 
+	FROM Woman_Generation 
+<!-- 	where 컬럼명 = '값'  -->
+	ORDER BY dbms_random.value() fetch first 6 rows only
 	</select>
 </mapper>

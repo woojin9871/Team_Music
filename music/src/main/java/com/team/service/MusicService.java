@@ -6,5 +6,6 @@ import com.team.domain.Music;
 
 public interface MusicService {
 
-	public List<Music> music() throws Exception;
+	public List<Music> list() throws Exception;
+
 }
