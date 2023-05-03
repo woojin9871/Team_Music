@@ -41,6 +41,9 @@
      <li class="nav-item">
       <a class="nav-link active" aria-current="page" href="/generation/womanGeneration">Generation</a>
      </li>
+     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/musicBoard/list">list</a>
+     </li>
     </ul>
    </div>
   </div>
@@ -75,7 +78,7 @@
     <p class="card-text" style="font-size:13px">채팅창에 당신의 기분을 남겨주시면 <br/> 당신에게 이 노래를 추천해 드릴게요 <br/> 당신의 기분에 위로와 기쁨이 될 수 있도록 바랄게요</p>
     <th:block sec:authorize="isAnonymous()">
 		<button type="button" onclick="location.href='/auth/login'" class="btn btn-primary mx-1">로그인</button>
-		<button type="button" onclick="location.href='/auth/join'" class="btn btn-primary mx-1">회원가입</button>
+		<button type="button" onclick="openPopup()" class="btn btn-primary mx-1">회원가입</button>
 	</th:block>
  <th:block sec:authorize="isAuthenticated()">
 	<button type="button" onclick="location.href=''" class="btn btn-primary">채팅하기</button>
@@ -87,4 +90,38 @@
 
 
 </body>
+
+<script>
+let popupWindow;
+
+function openPopup() {
+  popupWindow = window.open("/auth/join", "회원 가입", "width=400,height=800");
+}
+
+window.addEventListener("message", function(event) {
+	  if (event.data === "회원가입 완료") {
+		
+	    popupWindow.close();
+	    onPopupClosed();
+	    
+// 	    location.reload();
+// 	    window.opener.location.reload();
+	  }
+	});
+	
+// 팝업 창이 닫히면 실행되는 함수
+function onPopupClosed() {
+  alert("회원 가입이 완료되었습니다.");
+
+  setTimeout(function() {
+		location.reload(true);
+	  }, 1000);
+//   location.href = location.href;
+//   location.reload();
+//   window.opener.location.reload();
+}
+
+</script>
+
+
 </html> 

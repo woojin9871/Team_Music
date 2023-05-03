@@ -33,9 +33,8 @@ public class MusicController {
 	
 	@GetMapping("/music/genre/{genre}")
 	public String getMusicByGenre(@PathVariable("genre") String genre, Model model) {
-	    // 매퍼를 호출하여 genre에 해당하는 데이터를 추출
 	    List<Music> musicList = mapper.selectMusicByGenre(genre);
-	    model.addAttribute("musiclist", musicList);
-	    return "music";
+	    model.addAttribute("musicList", musicList);
+	    return "music/musicByGenre :: musicByGenreContainer";
 	}
 }

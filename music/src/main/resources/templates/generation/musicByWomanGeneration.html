@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>세대별</title>
+</head>
+<body>
+<div class="container-fluid" id="row2" th:fragment="musicByWomanGenerationContainer">
+  <div class="row" align="center">
+    <div class="col-md-4 mb-4" th:each="womanGeneration : ${womanGenerationList}">
+      <div class="card" style="width: 22rem;">
+        <img th:src="${womanGeneration.albumImg}" class="card-img-top"/>
+        <div class="card-body opacity-75">
+          <h5 class="card-title"><a th:href="${womanGeneration.youtube}" target="_blank" th:text="${womanGeneration.songName}"></a></h5>
+          <p class="card-text" th:text="${womanGeneration.artist}"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

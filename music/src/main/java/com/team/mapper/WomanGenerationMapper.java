@@ -11,4 +11,6 @@ public interface WomanGenerationMapper {
 
 	// 세대별 음악 목록
 	public List<WomanGeneration> list() throws Exception;
+	
+	public List<WomanGeneration> selectMusicByWomanGeneration(String womanGeneration);
 }

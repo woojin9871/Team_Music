@@ -11,6 +11,59 @@
   outline:none !important;
   box-shadow:none !important;
   }
+  
+  .image {
+    position: relative;
+  }
+   .card-body {
+    position: absolute;
+    top: 88%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: white;
+    background-color: black;
+    width: 100%;
+    height: 85px;
+  }
+  
+  .card-title a {
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    width: 270px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .card-text {
+  	text-decoration: none;
+    color: white;
+    display: inline-block;
+    width: 270px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+  } 
+
+  #row2 {
+    position: relative;
+    top: 20px;
+  }
+ 
+	.container {
+		 position: relative;
+   } 
+
+    a{
+      color:#1a1a1a;
+      text-decoration: none;
+   }
+   
+   li {
+   	list-style: none;
+   }
+   
 </style>
 <body>
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed_top">
@@ -63,54 +116,50 @@
   </div>
 </div>
 
-
  <div class="container text-center border">
   <div class="row">
     <div class="col">
-      <button type="button" class="btn btn-light">10대</button>
+    	<li><a href="#" onclick="loadMusic('10');"><span>10대</span></a></li>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-light">20대</button>
+      <li><a href="#" onclick="loadMusic('20');"><span>20대</span></a></li>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-light">30대</button>
+      <li><a href="#" onclick="loadMusic('30');"><span>30대</span></a></li>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-light">40대</button>
+      <li><a href="#" onclick="loadMusic('40');"><span>40대</span></a></li>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-light">50대</button>
+      <li><a href="#" onclick="loadMusic('50');"><span>50대</span></a></li>
     </div>
-
-<table class="table">
-<thead style="visibility: hidden;">
-  <tr>
-    <th>곡정보</th>
-    <th>곡이름</th>
-    <th>아티스트</th>
-    <th>앨범</th>
-    <th>듣기</th>
-  </tr>
-</thead>
-<tbody>
-  <th:block th:each="manGeneration : ${manGenerationList}">
-    <tr>
-      <td width="50" align="center">
-      	<img th:src="${manGeneration.albumImg}"/>
-      </td>
-      <td width="50" align="center" th:text="${manGeneration.songName}"></td>
-      <td width="150" align="center" th:text="${manGeneration.artist}"></td>
-      <td width="100" align="center" th:text="${manGeneration.albumName}"></td>
-      <td width="100" align="center">
-      	<a th:href="${manGeneration.youtube}" target="_blank">듣기</a>
-      </td>
-    </tr>
-  </th:block>
-</tbody>
-</table>
   </div>
 </div>
+
+	<div id="manGeneration-container"> 
+		<div id="manGeneration-container" th:replace="generation/musicByManGeneration :: musicByManGenerationContainer"></div>
+	</div>
  
 <!--  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding:108px"></nav> -->
 </body>
+<script>
+// 장르 클릭 시 무작위로 6개 표시
+function loadMusic(manGeneration) {
+	  // 아래쪽 컨테이너에 해당하는 HTML 요소를 가져옵니다.
+	  var container = document.getElementById("manGeneration-container");
+	  
+	  // AJAX 요청을 보내어 서버에서 데이터를 가져옵니다.
+	  var xhr = new XMLHttpRequest();
+	  xhr.onreadystatechange = function() {
+	    if (xhr.readyState === XMLHttpRequest.DONE) {
+	      if (xhr.status === 200) {
+	        container.innerHTML = xhr.responseText;
+	      }
+	    }
+	  };
+	  xhr.open("GET", "/generation/manGeneration/" + encodeURIComponent(manGeneration), true);
+	  xhr.send();
+	}
+
+</script>
 </html>

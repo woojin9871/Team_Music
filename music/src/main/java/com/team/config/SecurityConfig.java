@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			.antMatchers("/").permitAll()			// "/" 경로는 모든 사용자에 허용
 			.antMatchers("/genre/**").permitAll()
 			.antMatchers("/artist/**").permitAll()
+			.antMatchers("/musicBoard/**").permitAll()
 			.antMatchers("/generation/**").permitAll()
 			.antMatchers("/auth/**").permitAll()
 			.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")	
@@ -103,8 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		// - 해당 사이트에서 로그인한 정보라는 것을 인증
 
 		// CSRF 방지 기능 비활성화		(SSL 설정이 되어있지 않아서, 403 에러발생하기 때문에)
-		// http.csrf().disable();
-		
+//		 http.csrf().disable();
 		
 	}
 

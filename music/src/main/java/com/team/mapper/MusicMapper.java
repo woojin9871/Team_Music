@@ -10,7 +10,6 @@ import com.team.domain.Music;
 public interface MusicMapper {
 
 	public List<Music> list() throws Exception;
-	
-	public List<Music> selectMusicByGenre(String genre);
 
+	public List<Music> selectMusicByGenre(String genre);	
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>장르별</title>
+</head>
+<body>
+<div class="container-fluid" id="row2" th:fragment="musicByGenreContainer">
+  <div class="row" align="center">
+    <div class="col-md-4 mb-4" th:each="music : ${musicList}">
+      <div class="card" style="width: 22rem;">
+        <img th:src="${music.albumImg}" class="card-img-top"/>
+        <div class="card-body opacity-75">
+          <h5 class="card-title"><a th:href="${music.youtube}" target="_blank" th:text="${music.songName}"></a></h5>
+          <p class="card-text" th:text="${music.artist}"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

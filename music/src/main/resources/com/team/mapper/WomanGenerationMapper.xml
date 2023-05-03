@@ -8,7 +8,12 @@
 	<select id="list" resultType="WomanGeneration">
 	SELECT * 
 	FROM Woman_Generation 
-<!-- 	where 컬럼명 = '값'  -->
+	ORDER BY dbms_random.value() fetch first 6 rows only
+	</select>
+	
+	<select id="selectMusicByWomanGeneration" resultType="WomanGeneration">
+	SELECT * FROM Woman_Generation
+	WHERE GENERATION = #{generation}
 	ORDER BY dbms_random.value() fetch first 6 rows only
 	</select>
 </mapper>

@@ -1,0 +1,57 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.team.mapper.MusicBoardMapper">
+
+	<select id="list" resultType="MusicBoard">
+		SELECT *
+		FROM music_board
+		ORDER BY reg_date DESC
+	</select>
+	
+	<select id="read" resultType="MusicBoard">
+		SELECT *
+		FROM music_board
+		WHERE music_no = #{musicNo}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO music_board ( music_no, song_name, artist, writer, content )
+		VALUES ( SEQ_MUSIC_BOARD.nextval, #{songName}, #{artist}, #{writer}, #{content} )
+		<!--  VALUES ( SEQ_BOARD.nextval, #{0}, #{1}, #{2} )  -->
+	</insert>
+	
+	<update id="update">
+		UPDATE music_board
+		   set song_name = #{songName}
+		  	  ,artist = #{artist}
+		      ,writer = #{writer}
+		      ,content = #{content}
+		WHERE music_no = #{musicNo}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM music_board
+		WHERE music_no = #{musicNo}
+	</delete>
+	
+	
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
