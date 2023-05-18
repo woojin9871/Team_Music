@@ -10,4 +10,5 @@ public interface MusicUserService {
 	public int join(MusicUsers user) throws Exception;
 	
 	public HttpSession tokenAuthenticaion(MusicUsers user, HttpServletRequest reauest) throws Exception;
+	
 }

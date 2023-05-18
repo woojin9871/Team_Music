@@ -11,6 +11,14 @@
 		ORDER BY reg_date DESC
 	</select>
 	
+	<select id="search" resultType="MusicBoard">
+		SELECT *
+		FROM music_board
+		WHERE song_name LIKE '%' || #{keyword} || '%'
+		   OR artist LIKE '%' || #{keyword} || '%'
+		ORDER BY reg_date DESC
+	</select>
+	
 	<select id="read" resultType="MusicBoard">
 		SELECT *
 		FROM music_board

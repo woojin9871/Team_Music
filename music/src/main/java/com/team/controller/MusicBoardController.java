@@ -1,4 +1,4 @@
-     package com.team.controller;
+package com.team.controller;
 
 import java.security.Principal;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team.domain.MusicBoard;
 import com.team.service.MusicBoardService;
@@ -36,6 +35,17 @@ public class MusicBoardController {
 		log.info("musicBoardList : " + musicBoardList);
 		
 		return "/musicBoard/list";	
+	}
+	
+	@GetMapping(path="/musicBoard/list", params = "keyword")
+	public String search(Model model, String keyword) throws Exception {
+		
+		// 게시글 검색 요청
+		List<MusicBoard> musicBoardList = service.list(keyword);
+		
+		model.addAttribute("musicBoardList", musicBoardList);
+		
+		return "musicBoard/list";
 	}
 
 	@GetMapping("/musicBoard/insert")

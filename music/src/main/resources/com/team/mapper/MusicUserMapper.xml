@@ -20,4 +20,5 @@
     <select id="checkUserId" resultType="int">
         SELECT COUNT(*) FROM music_users WHERE user_id = #{userId}
     </select>
+
 </mapper>

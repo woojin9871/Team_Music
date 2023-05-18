@@ -15,6 +15,9 @@ configurations {
 	}
 }
 
+// bootwar.enabled = false
+war.enabled = true
+
 repositories {
 	mavenCentral()
 }

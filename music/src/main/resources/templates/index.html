@@ -6,6 +6,9 @@
 <!-- css -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<!-- 아이콘 사용을 위한 라이브러리 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<!-- 마이페이지 스타일 .toggle .mypage .show-->
 <style>
   .main_image {
     position: relative;
@@ -17,6 +20,67 @@
     transform: translate( -50%, -50% );
     color: white;
   }
+  .toggle-menu {
+      position: relative;
+    }
+
+    .toggle-menu-header {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .toggle-menu-button {
+      background-color: transparent;
+      border: none;
+      color: #333;
+      cursor: pointer;
+      font-size: 15px;
+      padding: 0;
+      text-decoration: underline;
+    }
+
+    .toggle-mypage {
+      display: none;
+      list-style-type: none;
+      margin: 0;
+      padding: 10px;
+      position: absolute;
+      right: -90px;
+      left: auto;
+      top: 201px;
+      max-width: 30rem;
+      z-index: 1;
+    }
+
+    .show {
+      display: block;
+    }
+    
+    .toggle-mypage .card {
+        position: absolute;
+	    top: 35%;
+	    left: 14%;
+	    transform: translate( -50%, -50% );
+    }
+    .toggle-mypage .profile{
+        width: 100%;
+	    height: 100%;
+	    object-fit: cover;
+    
+    }
+    .toggle-mypage .col-md-4 {
+        width: 80%;
+	    height: 80%; 
+	    border-radius: 70%;
+	    overflow: hidden;
+	    
+    }
+	.mypage {
+		display:flex;
+		justify-content: center;
+		width : 250px;
+		height: 100%;
+	}
 </style>
 </head>
 <body>
@@ -35,9 +99,9 @@
      <li class="nav-item">
       <a class="nav-link active" aria-current="page" href="/music/music">Music</a>
      </li>
-     <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="/artist/artist">Artist</a>
-     </li>
+<!--      <li class="nav-item"> -->
+<!--       <a class="nav-link active" aria-current="page" href="/artist/artist">Artist</a> -->
+<!--      </li> -->
      <li class="nav-item">
       <a class="nav-link active" aria-current="page" href="/generation/womanGeneration">Generation</a>
      </li>
@@ -48,9 +112,37 @@
    </div>
   </div>
   
- <th:block sec:authorize="isAuthenticated()">
-	<span sec:authentication="principal.username" class="text-white"></span>
-	<button type="button" onclick="location.href='/myPage/myPage'" class="btn btn-primary" style="width:160px">마이페이지</button>
+  
+  <th:block sec:authorize="isAuthenticated()">
+  <span sec:authentication="principal.username" class="text-white" style="margin-right:10px"></span>
+  <div class="toggle-menu">
+    <div class="toggle-menu-header">
+      <button style="color:white; margin-right: 3rem;" class="toggle-menu-button bg-dark"><i class="fas fa-user" style="font-size: 1.5em;"></i></button>
+    </div>
+    <div class="card border-light mb-3 toggle-mypage bg-dark">
+      <div class="row g-0 mypage">
+        <div class="col-md-4">
+        <a href="/myPage/myPage">
+          <img src="https://cdnimg.melon.co.kr/cm2/artistcrop/images/019/09/276/1909276_20221201110810_500.jpg?9b082fa1bb79cb45d1826750496344bd/melon/optimize/90" class="profile rounded-start" alt="...">
+        </a>
+        </div>
+        <div class="col-md-8">
+          <div>
+            <p style="color:white;" class="card-text">닉네임 : <span sec:authentication="principal.username" class="text-white"></span></p>
+            <p style="color:white;" class="card-text">이름 : <span sec:authentication="principal.username" class="text-white"></span></p>
+            <form action="/auth/logout" method="post" class="mx-3" style="display: flex; justify-content: center;">  
+			   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			   <th:block sec:authorize="isAuthenticated()">	
+				<button type="submit" class="btn btn-primary">로그아웃</button>				</th:block>	 
+			</form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+	
+<!-- 	<button type="button" onclick="location.href='/myPage/myPage'" class="btn btn-primary" style="width:160px">마이페이지</button> -->
  </th:block>
 
  </nav>
@@ -121,6 +213,25 @@ function onPopupClosed() {
 //   window.opener.location.reload();
 }
 
+// 마이페이지
+const button = document.querySelector('.toggle-menu-button');
+const mypage = document.querySelector('.toggle-mypage');
+
+button.addEventListener('click', () => {
+  mypage.classList.toggle('show');
+});
+
+//마이페이지 외부 눌러서 닫기
+window.addEventListener('click', (event) => {
+  // 클릭한 요소가 .toggle-menu-button 클래스를 포함하지 않은 경우에만 toggle
+  if (!event.target.closest('.toggle-menu-button')) {
+    // 클릭한 요소가 .toggle-mypage 클래스를 포함하거나 .toggle-mypage 요소 내부를 클릭한 경우에는 이벤트 버블링 중지
+    if (!event.target.closest('.toggle-mypage')) {
+      mypage.classList.remove('show');
+    }
+    event.stopPropagation();
+  }
+});
 </script>
 
 

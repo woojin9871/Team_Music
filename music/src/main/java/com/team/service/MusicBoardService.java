@@ -21,4 +21,7 @@ public interface MusicBoardService {
 	// 게시글 삭제
 	public int delete(int musicNo) throws Exception;
 	
+	// 게시글 검색
+	public List<MusicBoard> list(String keyword) throws Exception;
+	
 }

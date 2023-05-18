@@ -33,5 +33,8 @@ public interface MusicBoardMapper {
 	// 게시글 삭제
 	// @Param("파라미터명") : xml 매퍼 파일의 SQL 쿼리에서 매핑될 파라미터명을 명시하는 어노테이션
 	public int delete(@Param("musicNo") int musicNo) throws Exception;
-
+	
+	// 게시글 검색
+	public List<MusicBoard> search(String keyword) throws Exception;
+	
 }

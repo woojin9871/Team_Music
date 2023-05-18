@@ -43,6 +43,10 @@ public class MusicBoardServiceImpl implements MusicBoardService {
 		
 		return mapper.delete(musicNo);
 	}
-
-
+	
+	@Override
+	public List<MusicBoard> list(String keyword) throws Exception {
+		
+		return mapper.search(keyword);
+	}
 }
