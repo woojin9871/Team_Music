@@ -11,4 +11,6 @@ public interface MusicUserService {
 	
 	public HttpSession tokenAuthenticaion(MusicUsers user, HttpServletRequest reauest) throws Exception;
 	
+	public int profile(MusicUsers profile) throws Exception;
+	
 }

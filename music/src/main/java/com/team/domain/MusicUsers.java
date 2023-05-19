@@ -18,4 +18,5 @@ public class MusicUsers {
 	private int enabled;
 	private LocalDateTime regDate;
 	private LocalDateTime updDate;
+	private String profile;
 }

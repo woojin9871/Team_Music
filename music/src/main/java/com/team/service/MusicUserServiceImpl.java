@@ -78,4 +78,11 @@ public class MusicUserServiceImpl implements MusicUserService {
 		return session;
 	}
 	
+	@Override
+	public int profile(MusicUsers profile) throws Exception {
+		
+		return mapper.profile(profile);
+	}
+	
+	
 }

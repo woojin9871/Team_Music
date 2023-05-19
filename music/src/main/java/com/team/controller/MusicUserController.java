@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class UserController {
+public class MusicUserController {
 
 	@Autowired
 	private MusicUserService userService;

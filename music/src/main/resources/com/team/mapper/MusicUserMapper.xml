@@ -20,5 +20,11 @@
     <select id="checkUserId" resultType="int">
         SELECT COUNT(*) FROM music_users WHERE user_id = #{userId}
     </select>
+    
+    <!-- 프로필 이미지 -->
+    <select id="profile">
+		INSERT INTO music_users( profile )
+		VALUES ( #{profile} )    
+    </select>
 
 </mapper>

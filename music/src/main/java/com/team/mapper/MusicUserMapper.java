@@ -12,6 +12,8 @@ public interface MusicUserMapper {
 	
 	public int insertAuth(MusicUserAuth userAuth) throws Exception;
 	
+	public int profile(MusicUsers profile) throws Exception;
+	
     // 아이디 중복 확인
     public int checkUserId(String userId) throws Exception;
     
