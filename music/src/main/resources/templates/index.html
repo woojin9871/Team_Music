@@ -312,6 +312,8 @@ window.addEventListener('click', (event) => {
 });
 </script>
 
+</script>
+
    <script type="module">// Your JavaScript Here
 import { Configuration, OpenAIApi } from 'https://cdn.skypack.dev/openai';
 
@@ -334,32 +336,31 @@ document.querySelector('#send').addEventListener('click', function(){
   let chatContent = document.querySelector('.chat-content');
   chatContent.scrollTop = chatContent.scrollHeight;
 
-  document.querySelector('#loading').style.display = "block";
-
   const configuration = new Configuration({
-      apiKey: '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',
+      apiKey: '',
     });
     const openai = new OpenAIApi(configuration);
 
     openai.createCompletion({
       model: "text-davinci-003",
-      prompt: "\"" + input + "\"라는문장에대해\"아무거나\",\"장르종합\",\"국내종합\",\"해외종합\",\"발라드\",\"댄스\",\"랩/힙합\",\"R&B/Soul\",\"인디음악\",\"록/메탈\",\"트로트\",\"포크/블루스\",\"POP\",\"록/메탈\",\"일렉트로니카\",\"랩/힙합\",\"R&B/Soul\",\"포크/블루스/컨트리\",\"OST\",\"재즈\",\"뉴에이지\",\"J-pop\",\"월드뮤직\",\"CCM\",\"어린이/태교\",\"종교음악\",\"국악\"중에질문에가장관련이있는한개로제시해주세요, 한글과 영어, /와-를 제외한 모든것을 답변에서 빼주세요, 만약 \"다른\"이 포함된 질문이 들어오면 여태까지 제시한 모든 단어를 제외한 다른 단어를 제시해주세요",
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+      prompt: "\"" + input + "\"라는문장을 감정분석해서 \"아무거나\",\"장르종합\",\"국내종합\",\"해외종합\",\"발라드\",\"댄스\",\"랩／힙합\",\"R&B／Soul\",\"인디음악\",\"록／메탈\",\"트로트\",\"포크／블루스\",\"POP\",\"록／메탈\",\"일렉트로니카\",\"랩／힙합\",\"R&B／Soul\",\"포크／블루스／컨트리\",\"OST\",\"재즈\",\"뉴에이지\",\"J-pop\",\"월드뮤직\",\"CCM\",\"어린이／태교\",\"종교음악\",\"국악\"중에질문에가장관련이있는한개로제시해주세요, 한글과 영어, ／와-를 제외한 모든것을 답변에서 빼주세요, 만약 \"다른\"이 포함된 질문이 들어오면 여태까지 제시한 모든 단어를 제외한 다른 단어를 제시해주세요",
+      top_p: 1,temperature: 0.5,
+      frequency_penalty: 1,
+      presence_penalty: 0.5,
     }).then((result) => {
       var response = result.data.choices[0].text.trim();
-      var genre = response.replace(/[^\wㄱ-ㅎㅏ-ㅣ가-힣/]/g, '');
-if(genre = "아무거나") genre="장르종합";
+     var genre = response.replace(/[^\wㄱ-ㅎㅏ-ㅣ가-힣／&-]/g, '');
 var genrePrefix = "";
 
-if (["발라드", "댄스", "랩/힙합", "R&B/Soul", "인디음악", "록/메탈", "트로트", "포크/블루스"].includes(genre)) {
+if (["발라드", "댄스", "랩／힙합", "R&B／Soul", "인디음악", "록／메탈", "트로트", "포크／블루스"].includes(genre)) {
   genrePrefix = "국내_";
-} else if (["POP", "록/메탈", "일렉트로니카", "랩/힙합", "R&B/Soul", "포크/블루스/컨트리"].includes(genre)) {
+} else if (["POP", "록／메탈", "일렉트로니카", "랩／힙합", "R&B／Soul", "포크／블루스／컨트리"].includes(genre)) {
   genrePrefix = "해외_";
-} else if (["OST", "재즈", "뉴에이지", "J-pop", "월드뮤직", "CCM", "어린이/태교", "종교음악", "국악"].includes(genre)) {
+} else if (["OST", "재즈", "뉴에이지", "J-pop", "월드뮤직", "CCM", "어린이／태교", "종교음악", "국악"].includes(genre)) {
   genrePrefix = "그외_";
 }
+   else if(genre == "아무거나") genre="장르종합";
+else genre="해외종합";
 var genre = genrePrefix + genre;
       //var genre ="장르종합";
       var template = `<div class="bot">
@@ -375,8 +376,6 @@ var genreWithPrefix = genrePrefix + genre;
         document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
         chatContent.scrollTop = chatContent.scrollHeight;
       });
-
-      document.querySelector('#loading').style.display = "none";
       sendButton.disabled = false;
     });
   })
@@ -413,6 +412,8 @@ function loadMusic(genre, callback) {
 }
 
     </script>
+
+
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
