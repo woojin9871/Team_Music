@@ -49,6 +49,7 @@
       left: auto;
       top: 201px;
       max-width: 30rem;
+      max-height: 1000px;
       z-index: 1;
     }
 
@@ -58,30 +59,98 @@
     
     .toggle-mypage .card {
         position: absolute;
-	    top: 35%;
-	    left: 14%;
-	    transform: translate( -50%, -50% );
+       top: 35%;
+       left: 14%;
+       transform: translate( -50%, -50% );
     }
     .toggle-mypage .profile{
         width: 100%;
-	    height: 100%;
-	    object-fit: cover;
+       height: 100%;
+       object-fit: cover;
     
     }
     .toggle-mypage .col-md-4 {
         width: 80%;
-	    height: 80%; 
-	    border-radius: 70%;
-	    overflow: hidden;
-	    
+       height: 80%; 
+       border-radius: 70%;
+       overflow: hidden;
+       
     }
-	.mypage {
-		display:flex;
-		justify-content: center;
-		width : 250px;
-		height: 100%;
-	}
+   .mypage {
+      display:flex;
+      justify-content: center;
+      width : 250px;
+      height: 100%;
+   }
+.modal {
+   display: none;
+   position: fixed;
+   z-index: 1;
+   right: 0;
+   bottom: 0;
+   min-width: 20%;
+   min-height: 40%;
+   max-width: 30%;
+   max-height: 60%;
+   background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+   background-color: #fefefe;
+   border: 1px solid #888;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+}
+
+.input-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 20px;
+   border-top: 1px solid #888;
+}
+
+.close {
+   color: #aaa;
+   top: 10px;
+   right: 100px;
+   font-size: 28px;
+   font-weight: bold;
+}
+
+.close:hover, .close:focus {
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
+}
+
+.chat-content {
+   overflow-y: auto;
+   height: calc(100% - 70px);
+   padding: 10px;
+}
+
+.mine {
+   text-align: right;
+   padding: 5px;
+   margin-bottom: 10px;
+   background-color: #dcf8c6;
+   border-radius: 5px;
+}
+
+.bot {
+   text-align: left;
+   padding: 5px;
+   margin-bottom: 10px;
+   background-color: #f5f5f5;
+   border-radius: 5px;
+}
+
 </style>
+
 </head>
 <body>
 
@@ -113,7 +182,7 @@
   </div>
   
   
-  <th:block sec:authorize="isAuthenticated()">
+<th:block sec:authorize="isAuthenticated()" th:with="principal=${principal}">
   <span sec:authentication="principal.username" class="text-white" style="margin-right:10px"></span>
   <div class="toggle-menu">
     <div class="toggle-menu-header">
@@ -121,11 +190,11 @@
     </div>
     <div class="card border-light mb-3 toggle-mypage bg-dark">
       <div class="row g-0 mypage">
-        <div class="col-md-4">
-        <a href="/myPage/myPage">
-          <img src="https://cdnimg.melon.co.kr/cm2/artistcrop/images/019/09/276/1909276_20221201110810_500.jpg?9b082fa1bb79cb45d1826750496344bd/melon/optimize/90" class="profile rounded-start" alt="...">
-        </a>
-        </div>
+		<div class="col-md-4">
+		<a href="/myPage/myPage">
+			<img class="profile-image" src="" alt="프로필 이미지" >
+		</a>
+		</div>
         <div class="col-md-8">
           <div>
             <p style="color:white;" class="card-text">닉네임 : <span sec:authentication="principal.username" class="text-white"></span></p>
@@ -133,7 +202,8 @@
             <form action="/auth/logout" method="post" class="mx-3" style="display: flex; justify-content: center;">  
 			   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			   <th:block sec:authorize="isAuthenticated()">	
-				<button type="submit" class="btn btn-primary">로그아웃</button>				</th:block>	 
+				<button type="submit" class="btn btn-primary">로그아웃</button>
+			   </th:block>	 
 			</form>
           </div>
         </div>
@@ -155,7 +225,7 @@
      </div>
    </div>
  </div> -->
- 
+
  <div class="main_image">
       <img src="https://static.wixstatic.com/media/11062b_51d1f4d5dcfc4ce09d58b46aa23d5783~mv2.jpg/v1/fill/w_735,h_311,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/11062b_51d1f4d5dcfc4ce09d58b46aa23d5783~mv2.jpg" width="100%" height="100%" style="position: relative;">
    
@@ -169,19 +239,27 @@
     <h5 class="card-title">당신에 기분에 맞는 음악을 찾아드립니다</h5>
     <p class="card-text" style="font-size:13px">채팅창에 당신의 기분을 남겨주시면 <br/> 당신에게 이 노래를 추천해 드릴게요 <br/> 당신의 기분에 위로와 기쁨이 될 수 있도록 바랄게요</p>
     <th:block sec:authorize="isAnonymous()">
-		<button type="button" onclick="location.href='/auth/login'" class="btn btn-primary mx-1">로그인</button>
-		<button type="button" onclick="openPopup()" class="btn btn-primary mx-1">회원가입</button>
-	</th:block>
+      <button type="button" onclick="location.href='/auth/login'" class="btn btn-primary mx-1">로그인</button>
+      <button type="button" onclick="openPopup()" class="btn btn-primary mx-1">회원가입</button>
+   </th:block>
  <th:block sec:authorize="isAuthenticated()">
-	<button type="button" onclick="location.href=''" class="btn btn-primary">채팅하기</button>
+      <button type="button" id="chatbot-btn" class="btn btn-primary">채팅하기</button>
  </th:block>
   </div>
  </div>
  
+   <div id="myModal" class="modal">
+      <div class="modal-content">
+         <span class="close">&times;</span>
+         <div class="chat-content"></div>
+         <div class="input-container">
+            <input class="chat-box" id="input">
+            <button type="submit" id="send">전송</button>
+         </div>
+         <div id="loading" style="display: none;">답변 중...</div>
+      </div>
+   </div>
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding:108px"></nav>
-
-
-</body>
 
 <script>
 let popupWindow;
@@ -191,23 +269,23 @@ function openPopup() {
 }
 
 window.addEventListener("message", function(event) {
-	  if (event.data === "회원가입 완료") {
-		
-	    popupWindow.close();
-	    onPopupClosed();
-	    
-// 	    location.reload();
-// 	    window.opener.location.reload();
-	  }
-	});
-	
+     if (event.data === "회원가입 완료") {
+      
+       popupWindow.close();
+       onPopupClosed();
+       
+//        location.reload();
+//        window.opener.location.reload();
+     }
+   });
+   
 // 팝업 창이 닫히면 실행되는 함수
 function onPopupClosed() {
   alert("회원 가입이 완료되었습니다.");
 
   setTimeout(function() {
-		location.reload(true);
-	  }, 1000);
+      location.reload(true);
+     },1000);
 //   location.href = location.href;
 //   location.reload();
 //   window.opener.location.reload();
@@ -221,7 +299,7 @@ button.addEventListener('click', () => {
   mypage.classList.toggle('show');
 });
 
-//마이페이지 외부 눌러서 닫기
+// 마이페이지 외부 눌러서 닫기
 window.addEventListener('click', (event) => {
   // 클릭한 요소가 .toggle-menu-button 클래스를 포함하지 않은 경우에만 toggle
   if (!event.target.closest('.toggle-menu-button')) {
@@ -233,6 +311,142 @@ window.addEventListener('click', (event) => {
   }
 });
 </script>
+
+   <script type="module">// Your JavaScript Here
+import { Configuration, OpenAIApi } from 'https://cdn.skypack.dev/openai';
+
+document.querySelector('#input').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') {
+    e.preventDefault();
+    document.querySelector('#send').click();
+  }
+});
+
+document.querySelector('#send').addEventListener('click', function(){
+  var sendButton = document.querySelector('#send');
+  sendButton.disabled = true;
+  var input = document.querySelector('#input').value;
+
+  var template = `<div class="mine">
+    <span class="chat-box">${ input }</span>
+  </div>`
+  document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+  let chatContent = document.querySelector('.chat-content');
+  chatContent.scrollTop = chatContent.scrollHeight;
+
+  document.querySelector('#loading').style.display = "block";
+
+  const configuration = new Configuration({
+      apiKey: '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',
+    });
+    const openai = new OpenAIApi(configuration);
+
+    openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: "\"" + input + "\"라는문장에대해\"아무거나\",\"장르종합\",\"국내종합\",\"해외종합\",\"발라드\",\"댄스\",\"랩/힙합\",\"R&B/Soul\",\"인디음악\",\"록/메탈\",\"트로트\",\"포크/블루스\",\"POP\",\"록/메탈\",\"일렉트로니카\",\"랩/힙합\",\"R&B/Soul\",\"포크/블루스/컨트리\",\"OST\",\"재즈\",\"뉴에이지\",\"J-pop\",\"월드뮤직\",\"CCM\",\"어린이/태교\",\"종교음악\",\"국악\"중에질문에가장관련이있는한개로제시해주세요, 한글과 영어, /와-를 제외한 모든것을 답변에서 빼주세요, 만약 \"다른\"이 포함된 질문이 들어오면 여태까지 제시한 모든 단어를 제외한 다른 단어를 제시해주세요",
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+    }).then((result) => {
+      var response = result.data.choices[0].text.trim();
+      var genre = response.replace(/[^\wㄱ-ㅎㅏ-ㅣ가-힣/]/g, '');
+if(genre = "아무거나") genre="장르종합";
+var genrePrefix = "";
+
+if (["발라드", "댄스", "랩/힙합", "R&B/Soul", "인디음악", "록/메탈", "트로트", "포크/블루스"].includes(genre)) {
+  genrePrefix = "국내_";
+} else if (["POP", "록/메탈", "일렉트로니카", "랩/힙합", "R&B/Soul", "포크/블루스/컨트리"].includes(genre)) {
+  genrePrefix = "해외_";
+} else if (["OST", "재즈", "뉴에이지", "J-pop", "월드뮤직", "CCM", "어린이/태교", "종교음악", "국악"].includes(genre)) {
+  genrePrefix = "그외_";
+}
+var genre = genrePrefix + genre;
+      //var genre ="장르종합";
+      var template = `<div class="bot">
+        <span class="chat-box"><a href="${genre}" target="_blank">${genre}</a></span>
+      </div>`;
+
+var genreWithPrefix = genrePrefix + genre;
+      document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+      chatContent.scrollTop = chatContent.scrollHeight;
+
+      // 수정: loadMusic() 함수에서 서버로부터 데이터를 받아와 template에 할당
+      loadMusic(genre, function(template) {
+        document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+        chatContent.scrollTop = chatContent.scrollHeight;
+      });
+
+      document.querySelector('#loading').style.display = "none";
+      sendButton.disabled = false;
+    });
+  })
+
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("chatbot-btn");
+var span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+function loadMusic(genre, callback) {
+  // 아래쪽 컨테이너에 해당하는 HTML 요소를 가져옵니다.
+  var container = document.getElementById("music-container");
+
+  // AJAX 요청을 보내어 서버에서 데이터를 가져옵니다.
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        // 수정: 서버 응답에 따른 로직 추가
+        var template = xhr.responseText;
+        callback(template);
+      }
+    }
+  };
+  xhr.open("GET", "/music/genre/" + encodeURIComponent(genre), true);
+  xhr.send();
+}
+
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   $(document).ready(function() {
+       $.get("/profile", function(data) {
+           var profileImage;
+           switch (data) {
+           case 0:
+             profileImage = "/img/profile.jpg";
+             break;
+           case 1:
+             profileImage = "/img/joy.jpg";
+             break;
+           case 2:
+             profileImage = "/img/sadness.jpg";
+             break;
+           case 3:
+             profileImage = "/img/anger.jpg";
+             break;
+           case 4:
+             profileImage = "/img/disgust.jpg";
+             break;
+           case 5:
+             profileImage = "/img/fear.jpg";
+             break;
+         }
+           $("img.profile-image").attr("src", profileImage);
+       });
+   });
+
+</script>
+</body>
+
+
 
 
 </html> 

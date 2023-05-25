@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			// hasRole("ADMIN")				- 단일 권한에 대하여 허용
 			.antMatchers("/").permitAll()			// "/" 경로는 모든 사용자에 허용
 			.antMatchers("/genre/**").permitAll()
-			.antMatchers("/artist/**").permitAll()
+			.antMatchers("/myPage/**").permitAll()
 			.antMatchers("/musicBoard/**").permitAll()
 			.antMatchers("/generation/**").permitAll()
 			.antMatchers("/auth/**").permitAll()

@@ -21,10 +21,15 @@
         SELECT COUNT(*) FROM music_users WHERE user_id = #{userId}
     </select>
     
-    <!-- 프로필 이미지 -->
-    <select id="profile">
-		INSERT INTO music_users( profile )
-		VALUES ( #{profile} )    
-    </select>
+    <!-- 프로필 사진 -->
+	<select id="getProfileById" resultType="int">
+	    SELECT profile FROM music_users WHERE user_id = #{userId}
+	</select>
 
+	<!-- 프로필 수정 -->
+	<update id="updateProfile">
+		UPDATE music_users
+		SET profile = #{profile}
+		WHERE user_id = #{userId}
+	</update>
 </mapper>

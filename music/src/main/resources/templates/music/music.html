@@ -191,7 +191,7 @@
    <span class="navbar-toggler-icon"></span>
   </button>
    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size:25px; padding:30px;">
-    <ol class="navbar-nav me-auto mb-2 mb-lg-0">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
      <li class="nav-item">
       <a class="nav-link active" aria-current="page" href="/">Home</a>
      </li>
@@ -207,11 +207,12 @@
      <li class="nav-item">
       <a class="nav-link active" aria-current="page" href="/musicBoard/list">list</a>
      </li>
-    </ol>
+    </ul>
    </div>
   </div>
   
-  <th:block sec:authorize="isAuthenticated()">
+  
+<th:block sec:authorize="isAuthenticated()" th:with="principal=${principal}">
   <span sec:authentication="principal.username" class="text-white" style="margin-right:10px"></span>
   <div class="toggle-menu">
     <div class="toggle-menu-header">
@@ -219,9 +220,11 @@
     </div>
     <div class="card border-light mb-3 toggle-mypage bg-dark">
       <div class="row g-0 mypage">
-        <div class="col-md-4">
-          <img src="https://pngimg.com/uploads/batman/batman_PNG16.png" class="profile rounded-start" alt="...">
-        </div>
+		<div class="col-md-4">
+		<a href="/myPage/myPage">
+			<img class="profile-image" src="" alt="프로필 이미지" >
+		</a>
+		</div>
         <div class="col-md-8">
           <div>
             <p style="color:white;" class="card-text">닉네임 : <span sec:authentication="principal.username" class="text-white"></span></p>
@@ -229,14 +232,19 @@
             <form action="/auth/logout" method="post" class="mx-3" style="display: flex; justify-content: center;">  
 			   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			   <th:block sec:authorize="isAuthenticated()">	
-				<button type="submit" class="btn btn-primary">로그아웃</button>				</th:block>	 
+				<button type="submit" class="btn btn-primary">로그아웃</button>
+			   </th:block>	 
 			</form>
           </div>
         </div>
       </div>
     </div>
   </div>
+ 
+	
+<!-- 	<button type="button" onclick="location.href='/myPage/myPage'" class="btn btn-primary" style="width:160px">마이페이지</button> -->
  </th:block>
+
  </nav>
 
 <!--   <h2 style="text-align:center;"> 장르를 누르면 무작위 추천 </h2>	 -->
@@ -359,5 +367,34 @@ for (var i = 0; i < links.length; i++) {
     this.classList.remove("not-clicked");
   });
 }
+</script>
+<script>
+   $(document).ready(function() {
+       $.get("/profile", function(data) {
+           var profileImage;
+           switch (data) {
+           case 0:
+             profileImage = "/img/profile.jpg";
+             break;
+           case 1:
+             profileImage = "/img/joy.jpg";
+             break;
+           case 2:
+             profileImage = "/img/sadness.jpg";
+             break;
+           case 3:
+             profileImage = "/img/anger.jpg";
+             break;
+           case 4:
+             profileImage = "/img/disgust.jpg";
+             break;
+           case 5:
+             profileImage = "/img/fear.jpg";
+             break;
+         }
+           $("img.profile-image").attr("src", profileImage);
+       });
+   });
+
 </script>
 </html>

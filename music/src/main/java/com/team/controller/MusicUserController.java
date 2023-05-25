@@ -1,5 +1,7 @@
 package com.team.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team.domain.MusicUsers;
@@ -90,4 +91,23 @@ public class MusicUserController {
 	        return "success";
 	    }
 	}
+	
+	// 프로필 사진
+	@GetMapping("/profile")
+	@ResponseBody
+	public int getProfileById(Principal principal) {
+	    String userId = principal.getName(); // 로그인한 사용자의 아이디 가져오기
+	    return userMapper.getProfileById(userId);
+	}
+	
+	// 프로필 수정
+	@PostMapping("/profile")
+	@ResponseBody
+	public boolean updateProfile(Principal principal, @RequestParam("profile") int profile) {
+	    String userId = principal.getName(); // 로그인한 사용자의 아이디 가져오기
+	    // profile 업데이트
+	    int rowsUpdated = userMapper.updateProfile(userId, profile);
+	    return rowsUpdated > 0;
+	}
+
 }
